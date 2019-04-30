@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/cupertino.dart';
@@ -43,6 +44,8 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
   final TextEditingController _textController = new TextEditingController();
   bool _isComposing = false; //new
 
+  String msgValue = '';
+
   @override
   void dispose() {
     //new
@@ -64,13 +67,27 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
           child: new Column(
             //modified
             children: <Widget>[
-              new Flexible(
-                child: new ListView.builder(
-                  padding: new EdgeInsets.all(8.0),
-                  reverse: true,
-                  itemBuilder: (_, int index) => _messages[index],
-                  itemCount: _messages.length,
-                ),
+              StreamBuilder(
+                stream: Firestore.instance
+                    .collection('contacts')
+                    .document('rao')
+                    .snapshots(),
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) return LinearProgressIndicator();
+                  String newMsgValue = snapshot.data['rao'];
+                  if (newMsgValue != msgValue && newMsgValue != null) {
+                    msgValue = newMsgValue;
+                    _handleSubmitted2(newMsgValue);
+                  }
+                  return Flexible(
+                    child: new ListView.builder(
+                      padding: new EdgeInsets.all(8.0),
+                      reverse: true,
+                      itemBuilder: (_, int index) => _messages[index],
+                      itemCount: _messages.length,
+                    ),
+                  );
+                },
               ),
               new Divider(height: 1.0),
               new Container(
@@ -155,6 +172,19 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
     setState(() {
       _messages.insert(0, message);
     });
+    message.animationController.forward();
+  }
+
+  void _handleSubmitted2(String text) {
+    _textController.clear(); //new
+    ChatMessage message = new ChatMessage(
+      text: text,
+      animationController: new AnimationController(
+        duration: new Duration(milliseconds: 700),
+        vsync: this,
+      ),
+    );
+    _messages.insert(0, message);
     message.animationController.forward();
   }
 }

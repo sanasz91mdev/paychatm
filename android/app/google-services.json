@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "793610728783",
+    "firebase_url": "https://paychatm.firebaseio.com",
+    "project_id": "paychatm",
+    "storage_bucket": "paychatm.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:793610728783:android:28e162b0c6af245d",
+        "android_client_info": {
+          "package_name": "com.example.paychat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "793610728783-v99sc2si9q8uppfkhgej914551o3me0b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCjXaUh8cx5oASUL29FLKll4eTO_7g4mmw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "793610728783-v99sc2si9q8uppfkhgej914551o3me0b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
